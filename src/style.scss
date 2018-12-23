@@ -1,0 +1,82 @@
+$fontcolor:  rgb(10%, 10%, 10%);
+$backgroundcolor: rgb(98%, 98%, 98%);
+
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: $fontcolor;
+  background-color: $backgroundcolor;
+  margin: 50px;
+}
+
+
+#search-bar {
+  margin-bottom: 20px;
+
+  input {
+    font-size: 1.5em;
+    border-radius: .25em;
+  }
+}
+
+
+.active {
+  color: pink;
+}
+
+.chessContainer {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.mainBackground {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #1E304C;
+
+  justify-content: flex-start;
+}
+
+.mainContainerTop{
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background-color: #FEF5ED;
+}
+
+.topComponentMain {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+.connectionComponent {
+  width: 320px;
+  height: 80px;
+  background-color: red;
+}
+
+.topcInput {
+  width: 120px;
+}
+
+.chessBoard{
+
+}
+
+.chessTile {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
