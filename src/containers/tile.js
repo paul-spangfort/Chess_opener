@@ -35,7 +35,7 @@ class Tile extends Component {
     } else {
       return (
         <div>
-          <img src="https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces#/media/File:Chess_kdt45.svg" alt="" />
+          <img src="https://img.icons8.com/ios/50/000000/pawn-filled.png" alt="" />
         </div>
       );
     }

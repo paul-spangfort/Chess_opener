@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Chess from 'react-chess';
-import Engine from 'chess.js';
+import Chess from 'chess.js';
 
 import Tile from './tile';
 
-import { fillBoard } from '../helper_functions';
+import { intToCoord, fillBoard, getSource } from '../helper_functions';
 
 class Chessboard extends Component {
 
@@ -16,14 +15,33 @@ class Chessboard extends Component {
     this.state = {
       tiles,
       clicked: 'empty',
+      engine: new Chess(),
+      board: '',
     };
 
+    this.setState({ board: this.getBoard() });
+
     this.onClick = this.onClick.bind(this);
+    this.getBoard = this.getBoard.bind(this);
   }
 
   onClick(tile) {
     this.setState({ clicked: tile });
     console.log(tile);
+  }
+
+  getBoard() {
+    const board = [];
+
+    for (let i = 0; i < 64; i += 1) {
+      const coord = intToCoord(i);
+      const tile = this.state.engine.get(coord);
+      board.push(tile);
+    }
+
+    console.log(board);
+
+    return board;
   }
 
   render() {
