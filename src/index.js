@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import Main from './containers/chess_container';
+// import Main from './containers/chess_container';
+import Chessboard from './containers/chessboard';
 
 import TopComponent from './containers/top_component';
 import './style.scss';
@@ -18,8 +19,7 @@ const App = (props) => {
         </div>
 
         <div className="mainContainerBot">
-fd
-<Main />
+          <Chessboard />
         </div>
 
       </div>
