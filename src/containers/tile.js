@@ -7,10 +7,12 @@ class Tile extends Component {
 
     const color = (props.color) ? props.color : 'black';
     const piece = (props.piece) ? props.piece : false;
+    const coordinate = (props.coordinate) ? props.coordinate : 'empty';
 
     this.state = {
       color,
       piece,
+      coordinate,
     };
 
     if (typeof props.color === 'undefined') {
@@ -18,6 +20,11 @@ class Tile extends Component {
     }
 
     this.renderPiece = this.renderPiece.bind(this);
+    this.coord = this.coord.bind(this);
+  }
+
+  coord() {
+    console.log(this.state.coordinate);
   }
 
   renderPiece() {
@@ -38,13 +45,15 @@ class Tile extends Component {
     const styles = {
 
       backgroundColor: this.state.color,
+      color: (this.state.color === 'white') ? 'black' : 'white',
       // height: this.state.height,
       // width: this.state.width,
     };
 
     return (
-      <div className="chessTile" style={styles} >
+      <div className="chessTile" style={styles} onClick={() => this.props.onclick(this.state.coordinate)}>
         {this.renderPiece()}
+        {this.state.coordinate}
       </div>
     );
   }

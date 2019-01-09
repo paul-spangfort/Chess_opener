@@ -1,24 +1,10 @@
 import React, { Component } from 'react';
+import Chess from 'react-chess';
+import Engine from 'chess.js';
+
 import Tile from './tile';
 
-
-function fillBoard(tiles) {
-  let swap = true;
-  for (let i = 0; i < 64; i += 1) {
-    if (i % 8 === 0) { swap = !swap; }
-
-    let c = '';
-
-    if (swap) {
-      c = (i % 2 === 0) ? 'black' : 'white';
-    } else {
-      c = (i % 2 === 1) ? 'black' : 'white';
-    }
-    tiles.push({ color: c });
-  }
-
-  return tiles;
-}
+import { fillBoard } from '../helper_functions';
 
 class Chessboard extends Component {
 
@@ -29,11 +15,21 @@ class Chessboard extends Component {
 
     this.state = {
       tiles,
+      clicked: 'empty',
     };
+
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(tile) {
+    this.setState({ clicked: tile });
+    console.log(tile);
   }
 
   render() {
-    const listItems = this.state.tiles.map(d => <Tile color={d.color} />);
+    // Push tiles from state into array of dom elements to display
+    const listItems = this.state.tiles.map(d => <Tile color={d.color} coordinate={d.coordinate} onclick={this.onClick} />);
+
     return (
       <div className="chessBoard" >
         {listItems}
