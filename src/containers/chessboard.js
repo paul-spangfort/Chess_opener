@@ -3,7 +3,7 @@ import Chess from 'chess.js';
 
 import Tile from './tile';
 
-import { intToCoord, fillBoard, getSource } from '../helper_functions';
+import { intToCoord, coordToInt, fillBoard, getSource } from '../helper_functions';
 
 class Chessboard extends Component {
 
@@ -17,12 +17,17 @@ class Chessboard extends Component {
       clicked: 'empty',
       engine: new Chess(),
       board: '',
+      origin: null,
+      dest: null,
     };
 
     this.setState({ board: this.getBoard() });
     this.onClick = this.onClick.bind(this);
     this.getBoard = this.getBoard.bind(this);
     getSource();
+
+    console.log(intToCoord(23));
+    console.log(coordToInt('h3'));
   }
 
   onClick(tile) {
@@ -45,10 +50,27 @@ class Chessboard extends Component {
     return board;
   }
 
+  updateSelect(coord) {
+    if (!this.state.origin) {
+      this.setState({ origin: coord });
+    }
+
+    if (!this.state.destination) {
+      this.setState({ destination: coord });
+    }
+  }
+
+  resetSelect() {
+    this.setState({ origin: null, destination: null });
+  }
+
   render() {
     // Push tiles from state into array of dom elements to display
     const updatedTiles = this.getBoard();
-    const listItems = updatedTiles.map(d => <Tile color={d.color} piece={d.piece} coordinate={d.coordinate} onclick={this.onClick} />);
+    const listItems = updatedTiles.map(d => <Tile
+      color={d.color} piece={d.piece}
+      coordinate={d.coordinate} onclick={this.onClick}
+    />);
 
     return (
       <div className="chessBoard" >

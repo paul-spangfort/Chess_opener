@@ -9,6 +9,14 @@ export function intToCoord(i) {
   return row.toString() + col.toString();
 }
 
+export function coordToInt(coord) {
+  console.log(coord[0].charCodeAt(0));
+  const row = coord[0].charCodeAt(0) - 97;
+  const col = parseInt(coord[1] - 1, 10);
+
+  return (8 * row) + col;
+}
+
 export function getSource(piece) {
   const imgSources = [
     'https://img.icons8.com/ios/50/000000/pawn-filled.png',

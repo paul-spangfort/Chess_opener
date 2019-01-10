@@ -59,6 +59,7 @@ class Tile extends Component {
     return (
       <div className="chessTile" style={styles} onClick={() => this.props.onclick(this.state)}>
         {this.renderPiece()}
+        {this.state.coordinate}
       </div>
     );
   }
