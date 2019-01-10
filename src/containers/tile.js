@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { getSource } from '../helper_functions';
+
 
 class Tile extends Component {
 
   constructor(props) {
     super(props);
 
-    const color = (props.color) ? props.color : 'black';
+    const color = (props.color === 'black') ? '#B87030' : '#E0C068';
     const piece = (props.piece) ? props.piece : false;
     const coordinate = (props.coordinate) ? props.coordinate : 'empty';
 
@@ -13,6 +15,7 @@ class Tile extends Component {
       color,
       piece,
       coordinate,
+      selected: false,
     };
 
     if (typeof props.color === 'undefined') {
@@ -29,13 +32,16 @@ class Tile extends Component {
 
   renderPiece() {
     if (this.state.piece) {
+      const imgsrc = getSource(this.state.piece);
       return (
-        <div> hi </div>
+        <div>
+          <img src={imgsrc} alt="" />
+        </div>
       );
     } else {
       return (
         <div>
-          <img src="https://img.icons8.com/ios/50/000000/pawn-filled.png" alt="" />
+          {this.state.piece.type}
         </div>
       );
     }
@@ -51,9 +57,8 @@ class Tile extends Component {
     };
 
     return (
-      <div className="chessTile" style={styles} onClick={() => this.props.onclick(this.state.coordinate)}>
+      <div className="chessTile" style={styles} onClick={() => this.props.onclick(this.state)}>
         {this.renderPiece()}
-        {this.state.coordinate}
       </div>
     );
   }

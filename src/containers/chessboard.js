@@ -20,9 +20,9 @@ class Chessboard extends Component {
     };
 
     this.setState({ board: this.getBoard() });
-
     this.onClick = this.onClick.bind(this);
     this.getBoard = this.getBoard.bind(this);
+    getSource();
   }
 
   onClick(tile) {
@@ -36,17 +36,19 @@ class Chessboard extends Component {
     for (let i = 0; i < 64; i += 1) {
       const coord = intToCoord(i);
       const tile = this.state.engine.get(coord);
-      board.push(tile);
-    }
 
-    console.log(board);
+      board[i] = this.state.tiles[i];
+
+      if (tile) { board[i].piece = tile; }
+    }
 
     return board;
   }
 
   render() {
     // Push tiles from state into array of dom elements to display
-    const listItems = this.state.tiles.map(d => <Tile color={d.color} coordinate={d.coordinate} onclick={this.onClick} />);
+    const updatedTiles = this.getBoard();
+    const listItems = updatedTiles.map(d => <Tile color={d.color} piece={d.piece} coordinate={d.coordinate} onclick={this.onClick} />);
 
     return (
       <div className="chessBoard" >

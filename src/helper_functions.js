@@ -9,25 +9,6 @@ export function intToCoord(i) {
   return row.toString() + col.toString();
 }
 
-export function fillBoard(tiles) {
-  let swap = true;
-  for (let i = 0; i < 64; i += 1) {
-    if (i % 8 === 0) { swap = !swap; }
-
-    let c = '';
-
-    if (swap) {
-      c = (i % 2 === 0) ? 'black' : 'white';
-    } else {
-      c = (i % 2 === 1) ? 'black' : 'white';
-    }
-
-    tiles.push({ color: c, coordinate: intToCoord(i) });
-  }
-
-  return tiles;
-}
-
 export function getSource(piece) {
   const imgSources = [
     'https://img.icons8.com/ios/50/000000/pawn-filled.png',
@@ -44,10 +25,10 @@ export function getSource(piece) {
     'https://img.icons8.com/ios/50/000000/king.png',
   ];
 
-  let i;
+  let i = 0;
 
   if (piece) {
-    if (piece.color === 'black') {
+    if (piece.color === 'b') {
       if (piece.type === 'p') {
         i = 0;
       }
@@ -89,4 +70,23 @@ export function getSource(piece) {
   }
 
   return imgSources[i];
+}
+
+export function fillBoard(tiles) {
+  let swap = true;
+  for (let i = 0; i < 64; i += 1) {
+    if (i % 8 === 0) { swap = !swap; }
+
+    let c = '';
+
+    if (swap) {
+      c = (i % 2 === 0) ? 'black' : 'white';
+    } else {
+      c = (i % 2 === 1) ? 'black' : 'white';
+    }
+
+    tiles.push({ color: c, coordinate: intToCoord(i), imgsrc: getSource() });
+  }
+
+  return tiles;
 }
