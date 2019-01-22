@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Chess from 'chess.js';
 
+import { connect } from 'react-redux';
+
 import Tile from './tile';
 
 import { intToCoord, coordToInt, fillBoard, getSource } from '../helper_functions';
+import { setOrigin } from '../actions';
 
 class Chessboard extends Component {
 
@@ -24,15 +27,15 @@ class Chessboard extends Component {
     this.setState({ board: this.getBoard() });
     this.onClick = this.onClick.bind(this);
     this.getBoard = this.getBoard.bind(this);
-    getSource();
+    this.updateSelect = this.updateSelect.bind(this);
+    this.resetSelect = this.resetSelect.bind(this);
 
-    console.log(intToCoord(23));
-    console.log(coordToInt('h3'));
+    getSource();
   }
 
   onClick(tile) {
-    this.setState({ clicked: tile });
-    console.log(tile);
+    this.updateSelect(tile);
+    coordToInt('a3');
   }
 
   getBoard() {
@@ -44,7 +47,11 @@ class Chessboard extends Component {
 
       board[i] = this.state.tiles[i];
 
-      if (tile) { board[i].piece = tile; }
+      if (tile) {
+        board[i].piece = tile;
+        board[i].origin = this.state.origin;
+        board[i].dest = this.state.dest;
+      }
     }
 
     return board;
@@ -53,11 +60,13 @@ class Chessboard extends Component {
   updateSelect(coord) {
     if (!this.state.origin) {
       this.setState({ origin: coord });
+    } else if (!this.state.destination) {
+      this.setState({ dest: coord });
     }
-
-    if (!this.state.destination) {
-      this.setState({ destination: coord });
-    }
+    setTimeout(() => {
+      console.log(this.state.origin);
+      console.log(this.state.dest);
+    }, 100);
   }
 
   resetSelect() {
@@ -67,9 +76,10 @@ class Chessboard extends Component {
   render() {
     // Push tiles from state into array of dom elements to display
     const updatedTiles = this.getBoard();
-    const listItems = updatedTiles.map(d => <Tile
-      color={d.color} piece={d.piece}
-      coordinate={d.coordinate} onclick={this.onClick}
+    const listItems = updatedTiles.map(tile => <Tile
+      color={tile.color} piece={tile.piece}
+      coordinate={tile.coordinate} onclick={this.onClick}
+      origin={tile.origin} dest={tile.dest}
     />);
 
     return (
@@ -80,4 +90,13 @@ class Chessboard extends Component {
   }
 }
 
-export default Chessboard;
+const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
+  currentBoard: state.currentBoard,
+});
+
+
+export default connect(mapStateToProps,
+  {
+    setOrigin,
+  },
+)(Chessboard);

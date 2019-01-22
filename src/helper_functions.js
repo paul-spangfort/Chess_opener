@@ -10,11 +10,10 @@ export function intToCoord(i) {
 }
 
 export function coordToInt(coord) {
-  console.log(coord[0].charCodeAt(0));
-  const row = coord[0].charCodeAt(0) - 97;
+  const row = coord.charCodeAt(0) - 97;
   const col = parseInt(coord[1] - 1, 10);
 
-  return (8 * row) + col;
+  return (8 * col) + row;
 }
 
 export function getSource(piece) {

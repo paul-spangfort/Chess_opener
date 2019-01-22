@@ -24,10 +24,16 @@ class Tile extends Component {
 
     this.renderPiece = this.renderPiece.bind(this);
     this.coord = this.coord.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   coord() {
     console.log(this.state.coordinate);
+  }
+
+  handleClick() {
+    this.props.onclick(this.state.coordinate);
+    this.setState({ selected: true });
   }
 
   renderPiece() {
@@ -56,13 +62,22 @@ class Tile extends Component {
       // width: this.state.width,
     };
 
+    if (this.state.selected) {
+      styles.backgroundColor = 'black';
+      console.log('hi');
+    }
+
     return (
-      <div className="chessTile" style={styles} onClick={() => this.props.onclick(this.state)}>
+      <div className="chessTile" style={styles} onClick={() => this.handleClick()}>
         {this.renderPiece()}
         {this.state.coordinate}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
+  currentBoard: state.currentBoard,
+});
 
 export default Tile;

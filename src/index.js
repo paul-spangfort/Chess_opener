@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 // import Main from './containers/chess_container';
 import Chessboard from './containers/chessboard';
 
+import { createStore, applyMiddleware, compose } from 'redux';
+
 import TopComponent from './containers/top_component';
 import './style.scss';
 

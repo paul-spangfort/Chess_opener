@@ -52,8 +52,10 @@
     "react": "^15.5.4",
     "react-chess": "^1.1.0",
     "react-dom": "^15.5.4",
+    "react-redux": "^6.0.0",
     "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "redux": "^4.0.1"
   },
   "homepage": "https://github.com/dartmouth-cs52-17S/starterpack-Pspanky#readme"
 }
