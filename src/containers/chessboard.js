@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Chess from 'chess.js';
 
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import Tile from './tile';
 
 import { intToCoord, coordToInt, fillBoard, getSource } from '../helper_functions';
-import { setOrigin } from '../actions';
+// import { setOrigin } from '../actions';
 
 class Chessboard extends Component {
 
@@ -94,9 +94,4 @@ const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
 });
 
-
-export default connect(mapStateToProps,
-  {
-    setOrigin,
-  },
-)(Chessboard);
+export default Chessboard;

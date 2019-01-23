@@ -55,7 +55,8 @@
     "react-redux": "^6.0.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "homepage": "https://github.com/dartmouth-cs52-17S/starterpack-Pspanky#readme"
 }
