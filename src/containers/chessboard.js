@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Chess from 'chess.js';
 
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import Tile from './tile';
 
 import { intToCoord, coordToInt, fillBoard, getSource } from '../helper_functions';
-// import { setOrigin } from '../actions';
+import { setOrigin, setDestination } from '../actions';
 
 class Chessboard extends Component {
 
@@ -31,6 +31,8 @@ class Chessboard extends Component {
     this.resetSelect = this.resetSelect.bind(this);
 
     getSource();
+
+    console.log(`String text ${React.version}`);
   }
 
   onClick(tile) {
@@ -58,11 +60,12 @@ class Chessboard extends Component {
   }
 
   updateSelect(coord) {
-    if (!this.state.origin) {
-      this.setState({ origin: coord });
-    } else if (!this.state.destination) {
-      this.setState({ dest: coord });
+    if (!this.props.currentBoard.origin) {
+      this.props.setOrigin(coord);
+    } else if (!this.props.currentBoard.dest) {
+      this.props.setDestination(coord);
     }
+
     setTimeout(() => {
       console.log(this.state.origin);
       console.log(this.state.dest);
@@ -94,4 +97,4 @@ const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
 });
 
-export default Chessboard;
+export default connect(mapStateToProps, { setOrigin, setDestination })(Chessboard);

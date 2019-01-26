@@ -6,13 +6,16 @@ const BoardReducer = (state = { origin: null, dest: null }, action) => {
   switch (action.type) {
 
     case ActionTypes.SET_ORIGIN:
+      console.log('lmao');
+      console.log(action);
+      console.log(state);
       return Object.assign({}, state, {
-        origin: action.payload.origin,
+        origin: action.payload,
       });
 
     case ActionTypes.SET_DEST:
       return Object.assign({}, state, {
-        dest: action.payload.dest,
+        dest: action.payload,
       });
 
     case ActionTypes.CLEAR:
