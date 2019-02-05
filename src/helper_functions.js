@@ -92,7 +92,7 @@ export function fillBoard(tiles) {
       c = (i % 2 === 1) ? 'black' : 'white';
     }
 
-    tiles.push({ color: c, coordinate: intToCoord(i), imgsrc: getSource() });
+    tiles.push({ color: c, coordinate: intToCoord(i) });
   }
 
   return tiles;

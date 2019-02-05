@@ -2,13 +2,15 @@ import { ActionTypes } from '../actions';
 
 // simple reducer used only on initial render to check if user is on a mobile
 // device or a desktop comp
-const BoardReducer = (state = { origin: null, dest: null }, action) => {
+const BoardReducer = (state = { origin: null, dest: null, board: [] }, action) => {
   switch (action.type) {
 
+    case ActionTypes.SET_BOARD:
+      return Object.assign({}, state, {
+        board: action.payload,
+      });
+
     case ActionTypes.SET_ORIGIN:
-      console.log('lmao');
-      console.log(action);
-      console.log(state);
       return Object.assign({}, state, {
         origin: action.payload,
       });
@@ -16,6 +18,16 @@ const BoardReducer = (state = { origin: null, dest: null }, action) => {
     case ActionTypes.SET_DEST:
       return Object.assign({}, state, {
         dest: action.payload,
+      });
+
+    case ActionTypes.CLEAR_ORIGIN:
+      return Object.assign({}, state, {
+        origin: null,
+      });
+
+    case ActionTypes.CLEAR_DEST:
+      return Object.assign({}, state, {
+        dest: null,
       });
 
     case ActionTypes.CLEAR:

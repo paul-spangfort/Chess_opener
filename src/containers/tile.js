@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getSource } from '../helper_functions';
-
+import { connect } from 'react-redux';
+import { getSource, coordToInt } from '../helper_functions';
 
 class Tile extends Component {
 
@@ -18,17 +18,27 @@ class Tile extends Component {
       selected: false,
     };
 
-    if (typeof props.color === 'undefined') {
-      this.setState({ color: 'black' });
-    }
-
     this.renderPiece = this.renderPiece.bind(this);
-    this.coord = this.coord.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.getColor = this.getColor.bind(this);
   }
 
-  coord() {
-    console.log(this.state.coordinate);
+  getColor() {
+    const n = coordToInt(this.state.coordinate);
+
+    const row = Math.floor(n / 8);
+
+    if (row % 2 === 0) {
+      if (n % 2 === 0) {
+        return '#B87030';
+      } else {
+        return '#E0C068';
+      }
+    } else if (n % 2 === 1) {
+      return '#B87030';
+    } else {
+      return '#E0C068';
+    }
   }
 
   handleClick() {
@@ -36,9 +46,19 @@ class Tile extends Component {
     this.setState({ selected: true });
   }
 
+
   renderPiece() {
-    if (this.state.piece) {
-      const imgsrc = getSource(this.state.piece);
+    const index = coordToInt(this.state.coordinate);
+
+    const tile = this.props.currentBoard.board[index];
+
+    if (this.state.coordinate === 'a2') {
+      console.log('ALLAH');
+      console.log(tile);
+    }
+
+    if (tile.piece) {
+      const imgsrc = getSource(tile.piece);
       return (
         <div>
           <img src={imgsrc} alt="" />
@@ -46,9 +66,7 @@ class Tile extends Component {
       );
     } else {
       return (
-        <div>
-          {this.state.piece.type}
-        </div>
+        <div />
       );
     }
   }
@@ -56,15 +74,14 @@ class Tile extends Component {
   render() {
     const styles = {
 
-      backgroundColor: this.state.color,
-      color: (this.state.color === 'white') ? 'black' : 'white',
+      backgroundColor: this.getColor(),
+      color: 'black',
       // height: this.state.height,
       // width: this.state.width,
     };
 
-    if (this.state.selected) {
-      styles.backgroundColor = 'black';
-      console.log('hi');
+    if (this.props.currentBoard.dest === this.state.coordinate || this.props.currentBoard.origin === this.state.coordinate) {
+      styles.backgroundColor = 'red';
     }
 
     return (
@@ -80,4 +97,4 @@ const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
 });
 
-export default Tile;
+export default connect(mapStateToProps, {})(Tile);
