@@ -52,11 +52,6 @@ class Tile extends Component {
 
     const tile = this.props.currentBoard.board[index];
 
-    if (this.state.coordinate === 'a2') {
-      console.log('ALLAH');
-      console.log(tile);
-    }
-
     if (tile.piece) {
       const imgsrc = getSource(tile.piece);
       return (

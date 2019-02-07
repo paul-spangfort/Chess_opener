@@ -2,12 +2,17 @@ import { ActionTypes } from '../actions';
 
 // simple reducer used only on initial render to check if user is on a mobile
 // device or a desktop comp
-const BoardReducer = (state = { origin: null, dest: null, board: [] }, action) => {
+const BoardReducer = (state = { origin: null, dest: null, board: [], pgn: null }, action) => {
   switch (action.type) {
 
     case ActionTypes.SET_BOARD:
       return Object.assign({}, state, {
         board: action.payload,
+      });
+
+    case ActionTypes.SET_PGN:
+      return Object.assign({}, state, {
+        pgn: action.payload,
       });
 
     case ActionTypes.SET_ORIGIN:

@@ -6,7 +6,15 @@ import { connect } from 'react-redux';
 import Tile from './tile';
 
 import { intToCoord, coordToInt, fillBoard } from '../helper_functions';
-import { setOrigin, setDestination, clearDest, clearOrigin, clearCoords, setBoard } from '../actions';
+import {
+  setOrigin,
+  setDestination,
+  clearDest,
+  clearOrigin,
+  clearCoords,
+  setBoard,
+  fetchGames,
+} from '../actions';
 
 class Chessboard extends Component {
 
@@ -39,6 +47,7 @@ class Chessboard extends Component {
 
   componentWillMount() {
     this.props.setBoard(this.getBoard1());
+    this.props.fetchGames('kingraoul');
   }
 
   onClick(tile) {
@@ -156,8 +165,8 @@ class Chessboard extends Component {
       coordinate={tile.coordinate} onclick={this.onClick}
     />);
 
-    console.log('These are tiles');
-    console.log(updatedTiles);
+    // console.log('These are tiles');
+    // console.log(updatedTiles);
     return (
       <div className="chessBoard" >
         {listItems}
@@ -170,4 +179,4 @@ const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
 });
 
-export default connect(mapStateToProps, { setOrigin, setDestination, clearDest, clearOrigin, clearCoords, setBoard })(Chessboard);
+export default connect(mapStateToProps, { setOrigin, setDestination, clearDest, clearOrigin, clearCoords, setBoard, fetchGames })(Chessboard);
