@@ -1,3 +1,17 @@
+/*
+The chessboard is a top-level container with 3 main purposes
+
+1. Communicates with the redux state to render the chess board and
+pass a callback function to the individual tiles so that user moves
+can be recorded
+
+2. Stores the ChessJS engine for validating and updating chess moves
+on the board
+
+3. Makes API calls to Chess.com for fetching and storing archived games of
+whatever player/user you want
+*/
+
 import React, { Component } from 'react';
 import Chess from 'chess.js';
 
@@ -5,7 +19,7 @@ import { connect } from 'react-redux';
 
 import Tile from './tile';
 
-import { intToCoord, fillBoard } from '../helper_functions';
+import { intToCoord } from '../helper_functions';
 
 import {
   setOrigin,
@@ -22,24 +36,17 @@ class Chessboard extends Component {
   constructor(props) {
     super(props);
 
-    const tiles = fillBoard([]);
-
     this.state = {
-      tiles,
-      clicked: 'empty',
       engine: new Chess(),
-      board: '',
-      origin: null,
-      dest: null,
     };
 
     this.onClick = this.onClick.bind(this);
-    this.getBoard1 = this.getBoard1.bind(this);
+    this.getBoard = this.getBoard.bind(this);
     this.updateSelect = this.updateSelect.bind(this);
   }
 
   componentWillMount() {
-    this.props.setBoard(this.getBoard1());
+    this.props.setBoard(this.getBoard());
     this.props.fetchGames('kingraoul');
   }
 
@@ -47,7 +54,7 @@ class Chessboard extends Component {
     this.updateSelect(tile);
   }
 
-  getBoard1() { // eslint-disable-line
+  getBoard() { // eslint-disable-line
     let tiles = []; // eslint-disable-line
 
     let swap = true;

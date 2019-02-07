@@ -1,4 +1,3 @@
-
 export function intToCoord(i) {
   let col = Math.floor(i / 8);
   let row = i % 8;
