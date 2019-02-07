@@ -5,7 +5,7 @@ import { ActionTypes } from '../actions';
 const ArchiveReducer = (state = { games: null }, action) => {
   switch (action.type) {
 
-    case ActionTypes.SET_GAMES:
+    case ActionTypes.GET_ARCHIVE:
       return Object.assign({}, state, {
         games: action.payload,
       });

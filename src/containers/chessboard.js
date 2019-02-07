@@ -1,14 +1,14 @@
 /*
 The chessboard is a top-level container with 3 main purposes
 
-1. Communicates with the redux state to render the chess board and
+1. To communicate with the redux state to render the chess board and
 pass a callback function to the individual tiles so that user moves
-can be recorded
+can be recorded and displayed
 
-2. Stores the ChessJS engine for validating and updating chess moves
+2. Store the ChessJS engine for validating and updating chess moves
 on the board
 
-3. Makes API calls to Chess.com for fetching and storing archived games of
+3. Make API calls to Chess.com for fetching and storing archived games of
 whatever player/user you want
 */
 
@@ -29,6 +29,7 @@ import {
   clearCoords,
   setBoard,
   fetchGames,
+  getArchive,
 } from '../actions';
 
 class Chessboard extends Component {
@@ -54,28 +55,17 @@ class Chessboard extends Component {
     this.updateSelect(tile);
   }
 
-  getBoard() { // eslint-disable-line
-    let tiles = []; // eslint-disable-line
+  // Check internal engine to find which tiles have pieces on them
+  // and return them in an array
+  getBoard() {
+    const tiles = [];
 
-    let swap = true;
     for (let i = 0; i < 64; i += 1) {
       const tile = {};
 
       const coord = intToCoord(i);
       const piece = this.state.engine.get(coord);
 
-      if (i % 8 === 0) { swap = !swap; }
-
-
-      let c = '';
-
-      if (swap) {
-        c = (i % 2 === 0) ? 'black' : 'white';
-      } else {
-        c = (i % 2 === 1) ? 'black' : 'white';
-      }
-
-      tile.color = c;
       tile.coordinate = coord;
 
       if (piece) {
@@ -89,6 +79,10 @@ class Chessboard extends Component {
   }
 
   async updateSelect(coord) {
+    // The coord1 variable is not actually used, but acts
+    // as a placeholder so that we can await the result of
+    // our asynchronous action call and update the board
+
     let coord1; // eslint-disable-line
     const board = this.props.currentBoard;
 
@@ -108,7 +102,7 @@ class Chessboard extends Component {
       // If a move was made, reset the selections
       if (move) {
         this.props.clearCoords();
-        this.props.setBoard(this.getBoard1());
+        this.props.setBoard(this.getBoard());
         console.log('This is the pgn');
         console.log(this.state.engine.pgn());
       } else {
@@ -164,4 +158,14 @@ const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
 });
 
-export default connect(mapStateToProps, { setOrigin, setDestination, clearDest, clearOrigin, clearCoords, setBoard, fetchGames })(Chessboard);
+export default connect(mapStateToProps,
+  { setOrigin,
+    setDestination,
+    clearDest,
+    clearOrigin,
+    clearCoords,
+    setBoard,
+    fetchGames,
+    getArchive,
+  },
+)(Chessboard);

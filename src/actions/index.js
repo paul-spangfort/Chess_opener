@@ -9,6 +9,7 @@ export const ActionTypes = {
   CLEAR_DEST: 'CLEAR_DEST',
   CLEAR: 'CLEAR',
   FETCH_GAMES: 'FETCH_GAMES',
+  GET_ARCHIVE: 'GET_ARCHIVE',
 };
 
 function archivesUrl(username) {
@@ -38,6 +39,31 @@ export function fetchGames(username) {
           dispatch({
             type: ActionTypes.SET_PGN,
             payload: pgn,
+          });
+        });
+      }
+      console.log('This is response');
+      console.log(response);
+    });
+  };
+}
+
+export function getArchive(username) {
+  console.log('ABout to fetch at ');
+  console.log(archivesUrl(username));
+  return async (dispatch) => {
+    axios.get(archivesUrl(username)).then((response) => {
+      if (response.status === 200) {
+        console.log('Successful fetch');
+        const length = response.data.archives.length;
+
+        const date = response.data.archives[length - 1].slice(-7).split('/');
+        console.log(date);
+        axios.get(gamesUrl(username, date[1], date[0])).then((res) => {
+          const games = res.data.games;
+          dispatch({
+            type: ActionTypes.GET_ARCHIVE,
+            payload: games,
           });
         });
       }
