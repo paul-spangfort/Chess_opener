@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+
+import {
+  getArchive,
+} from '../actions';
+
 
 class TopComponent extends Component {
 
   constructor(props) {
     super();
-    this.props = {
-      temp: '',
+    this.state = {
+      username: '',
     };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(event) {
+    this.setState({ username: event.target.value });
   }
 
   render() {
+    const val = this.state.username ? this.state.username : '';
+
     return (
       <div className="topComponentMain">
 
@@ -18,7 +33,9 @@ class TopComponent extends Component {
 Username
         </div>
 
-          <input className="topcInput" />
+          <input className="topcInput" onChange={this.onChange} value={val} />
+
+          <Button onClick={() => this.props.getArchive(this.state.username)} />
 
         </div>
 
@@ -31,4 +48,13 @@ Username
   }
 }
 
-export default TopComponent;
+const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
+  archive: state.games,
+});
+
+
+export default connect(mapStateToProps,
+  {
+    getArchive,
+  },
+)(TopComponent);
