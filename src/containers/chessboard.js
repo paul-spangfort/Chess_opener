@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import Tile from './tile';
 
-import { intToCoord, coordToInt, fillBoard } from '../helper_functions';
+import { intToCoord, fillBoard } from '../helper_functions';
+
 import {
   setOrigin,
   setDestination,
@@ -32,17 +33,9 @@ class Chessboard extends Component {
       dest: null,
     };
 
-    this.setState({ board: this.getBoard() });
     this.onClick = this.onClick.bind(this);
-    this.getBoard = this.getBoard.bind(this);
     this.getBoard1 = this.getBoard1.bind(this);
     this.updateSelect = this.updateSelect.bind(this);
-
-    console.log('Constructor');
-    console.log(this.state.tiles);
-
-    console.log('hasdf');
-    console.log(this.getBoard1());
   }
 
   componentWillMount() {
@@ -52,7 +45,6 @@ class Chessboard extends Component {
 
   onClick(tile) {
     this.updateSelect(tile);
-    coordToInt('a3');
   }
 
   getBoard1() { // eslint-disable-line
@@ -89,25 +81,6 @@ class Chessboard extends Component {
     return tiles;
   }
 
-  getBoard() {
-    const board = [];
-
-    for (let i = 0; i < 64; i += 1) {
-      const coord = intToCoord(i);
-      const tile = this.state.engine.get(coord);
-
-      board[i] = this.state.tiles[i];
-
-      if (tile) {
-        board[i].piece = tile;
-        board[i].origin = this.state.origin;
-        board[i].dest = this.state.dest;
-      }
-    }
-
-    return board;
-  }
-
   async updateSelect(coord) {
     let coord1; // eslint-disable-line
     const board = this.props.currentBoard;
@@ -137,7 +110,12 @@ class Chessboard extends Component {
       }
     }
 
-    console.log(this.props.currentBoard);
+    const pgn = this.props.currentBoard.pgn;
+    if (pgn) {
+      // const options = { sloppy: true };
+      // console.log(this.state.engine.load_pgn(pgn, options));
+      // console.log(this.state.engine.pgn());
+    }
   }
 
   renderSquares() {

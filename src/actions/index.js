@@ -32,7 +32,7 @@ export function fetchGames(username) {
         console.log(date);
         axios.get(gamesUrl(username, date[1], date[0])).then((res) => {
           console.log('Fetched games, they are: ');
-          // console.log(res);
+          console.log(res);
           const pgn = res.data.games[0].pgn;
 
           dispatch({
