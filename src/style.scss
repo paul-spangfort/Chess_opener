@@ -45,7 +45,7 @@ body {
 .mainContainerTop{
   position: relative;
   width: 100%;
-  height: 120px;
+  height: 90px;
   background-color: #FEF5ED;
   display: flex;
   flex-direction: column;
@@ -55,11 +55,13 @@ body {
 .mainContainerBot{
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 700px;
   background-color: #1E304C;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-content: center;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .topComponentMain {
@@ -81,13 +83,24 @@ body {
   width: 120px;
 }
 
+.archives{
+  height: 600px;
+  width: 250px;
+  background-color: red;
+}
+
 .chessBoard{
   height: 600px;
   width: 600px;
   display: flex;
   flex-wrap: wrap;
-  margin: auto;
   padding: 0;
+}
+
+.pgn_container{
+  background-color: white;
+  height: 600px;
+  width: 200px;
 }
 
 .chessTile {

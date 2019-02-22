@@ -10,6 +10,8 @@ import reducers from './reducers';
 
 // import Main from './containers/chess_container';
 import Chessboard from './containers/chessboard';
+import Archives from './containers/archive';
+import PGN from './containers/pgn_container';
 
 
 import TopComponent from './containers/top_component';
@@ -34,7 +36,9 @@ const App = (props) => {
         </div>
 
         <div className="mainContainerBot">
+          <Archives />
           <Chessboard />
+          <PGN />
         </div>
 
       </div>
