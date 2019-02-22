@@ -19,6 +19,7 @@ class Tile extends Component {
     };
 
     this.renderPiece = this.renderPiece.bind(this);
+    this.renderCoord = this.renderCoord.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getColor = this.getColor.bind(this);
   }
@@ -66,11 +67,37 @@ class Tile extends Component {
     }
   }
 
+  renderCoord() {
+    if (this.state.coordinate[0] === 'a') {
+      const style = {
+        rightt: '20px',
+        position: 'absolute',
+      };
+      return (
+        <div style={style}>
+          {this.state.coordinate[1]}
+        </div>
+      );
+    } else if (this.state.coordinate[1] === '8') {
+      const style = {
+        top: '20px',
+        position: 'absolute',
+      };
+      return (
+        <div style={style}>
+          {this.state.coordinate[0]}
+        </div>
+      );
+    }
+
+    return '';
+  }
+
   render() {
     const styles = {
 
       backgroundColor: this.getColor(),
-      color: 'black',
+      color: 'white',
       // height: this.state.height,
       // width: this.state.width,
     };

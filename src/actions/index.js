@@ -10,6 +10,9 @@ export const ActionTypes = {
   CLEAR: 'CLEAR',
   FETCH_GAMES: 'FETCH_GAMES',
   GET_ARCHIVE: 'GET_ARCHIVE',
+  SET_GAMES: 'SET_GAMES',
+  FINISHED_LOADING: 'FINISHED_LOADING',
+  START_LOADING: 'START_LOADING',
 };
 
 function archivesUrl(username) {
@@ -20,30 +23,62 @@ function gamesUrl(username, month, year) {
   return `https://api.chess.com/pub/player/${username}/games/${year}/${month}`;
 }
 
+function processGame(game) {
+  const players = {
+    white: game.white,
+    black: game.black,
+  };
+
+  const pgn = game.pgn.split(/\r?\n/).slice(-1)[0].replace(/\{([^}]+)\}/g, '');
+
+  return { players, pgn };
+}
+
 export function fetchGames(username) {
   console.log('ABout to fetch at ');
   console.log(archivesUrl(username));
   return async (dispatch) => {
+    dispatch({
+      type: ActionTypes.START_LOADING,
+    });
+
     axios.get(archivesUrl(username)).then((response) => {
       if (response.status === 200) {
         console.log('Successful fetch');
-        const length = response.data.archives.length;
 
+        const length = response.data.archives.length;
         const date = response.data.archives[length - 1].slice(-7).split('/');
-        console.log(date);
+
+        // console.log(date);
         axios.get(gamesUrl(username, date[1], date[0])).then((res) => {
           console.log('Fetched games, they are: ');
           console.log(res);
-          const pgn = res.data.games[0].pgn;
+
+          const pgn = res.data.games[0].pgn.split(/\r?\n/).slice(-1)[0].replace(/\{([^}]+)\}/g, '');
+
+          console.log(pgn);
+
+          const games = [];
+
+          res.data.games.forEach((g) => {
+            const game = processGame(g);
+            games.push(game);
+          });
+
+          console.log(games);
+
+          console.log('This is game');
 
           dispatch({
-            type: ActionTypes.SET_PGN,
-            payload: pgn,
+            type: ActionTypes.SET_GAMES,
+            payload: games,
+          });
+
+          dispatch({
+            type: ActionTypes.FINISHED_LOADING,
           });
         });
       }
-      console.log('This is response');
-      console.log(response);
     });
   };
 }

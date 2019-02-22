@@ -14,7 +14,6 @@ class Main extends Component {
       lineup: ['R@h1', 'P@f2', 'q@d8', 'R@a1', 'P@a2', 'P@c2', 'b@c8', 'p@d7', 'Q@d1', 'n@g8'],
     };
 
-
     console.log(this.state);
     console.log(this.state.engine.pgn());
     this.state.engine.move({ from: 'e2', to: 'e4' });

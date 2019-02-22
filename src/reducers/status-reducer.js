@@ -2,17 +2,17 @@ import { ActionTypes } from '../actions';
 
 // simple reducer used only on initial render to check if user is on a mobile
 // device or a desktop comp
-const ArchiveReducer = (state = { games: null }, action) => {
+const StatusReducer = (state = { status: 'FINISHED' }, action) => {
   switch (action.type) {
 
-    case ActionTypes.GET_ARCHIVE:
+    case ActionTypes.FINISHED_LOADING:
       return Object.assign({}, state, {
-        games: action.payload,
+        status: 'FINISHED',
       });
 
-    case ActionTypes.SET_GAMES:
+    case ActionTypes.START_LOADING:
       return Object.assign({}, state, {
-        games: action.payload,
+        status: 'LOADING',
       });
 
 
@@ -21,4 +21,4 @@ const ArchiveReducer = (state = { games: null }, action) => {
   }
 };
 
-export default ArchiveReducer;
+export default StatusReducer;

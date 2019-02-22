@@ -48,7 +48,7 @@ class Chessboard extends Component {
 
   componentWillMount() {
     this.props.setBoard(this.getBoard());
-    this.props.fetchGames('kingraoul');
+    // this.props.fetchGames('kingraoul');
   }
 
   onClick(tile) {

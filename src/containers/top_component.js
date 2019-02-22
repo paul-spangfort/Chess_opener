@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 import {
   getArchive,
+  fetchGames,
 } from '../actions';
 
 
@@ -16,10 +17,19 @@ class TopComponent extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.renderButtonText = this.renderButtonText.bind(this);
   }
 
   onChange(event) {
     this.setState({ username: event.target.value });
+  }
+
+  renderButtonText() {
+    if (this.props.status.status === 'FINISHED') {
+      return ('Fetch Games');
+    } else {
+      return ('Loading');
+    }
   }
 
   render() {
@@ -35,7 +45,9 @@ Username
 
           <input className="topcInput" onChange={this.onChange} value={val} />
 
-          <Button onClick={() => this.props.getArchive(this.state.username)} />
+          <Button variant="outline-primary" size="sm" onClick={() => this.props.fetchGames(this.state.username)}>
+            {this.renderButtonText()}
+          </Button>
 
         </div>
 
@@ -50,11 +62,13 @@ Username
 
 const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   archive: state.games,
+  status: state.status,
 });
 
 
 export default connect(mapStateToProps,
   {
     getArchive,
+    fetchGames,
   },
 )(TopComponent);
