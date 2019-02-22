@@ -1,11 +1,11 @@
-import Chess from 'chess.js';
+// import Chess from 'chess.js';
 import { ActionTypes } from '../actions';
 
-const Engine = new Chess();
+// const Engine = new Chess();
 // simple reducer used only on initial render to check if user is on a mobile
 // device or a desktop comp
 const BoardReducer = (state = { origin: null, dest: null, board: [], pgn: null }, action) => {
-  const options = { sloppy: true };
+  // const options = { sloppy: true };
   switch (action.type) {
 
     case ActionTypes.SET_BOARD:
@@ -14,9 +14,9 @@ const BoardReducer = (state = { origin: null, dest: null, board: [], pgn: null }
       });
 
     case ActionTypes.SET_PGN:
-      Engine.load_pgn(action.payload, options);
+      // Engine.load_pgn(action.payload, options);
       return Object.assign({}, state, {
-        pgn: Engine.pgn(),
+        pgn: action.payload,
       });
 
     case ActionTypes.SET_ORIGIN:

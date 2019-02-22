@@ -36,13 +36,35 @@ class PGN extends Component {
     this.state = {
       pgn: '',
     };
+
+    this.renderPGN = this.renderPGN.bind(this);
+  }
+
+  renderPGN() {
+    if (this.props.currentBoard.pgn) {
+      return (
+        <div className="currentPGN">
+          {this.props.currentBoard.pgn}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+        hi
+        </div>
+      );
+    }
   }
 
 
   render() {
     return (
       <div className="pgn_container" >
-        hi
+        <div className="pgn_header">
+        PGN:
+        </div>
+
+        {this.renderPGN()}
       </div>
     );
   }

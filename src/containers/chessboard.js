@@ -30,6 +30,7 @@ import {
   setBoard,
   fetchGames,
   getArchive,
+  setPGN,
 } from '../actions';
 
 class Chessboard extends Component {
@@ -105,6 +106,7 @@ class Chessboard extends Component {
         this.props.setBoard(this.getBoard());
         console.log('This is the pgn');
         console.log(this.state.engine.pgn());
+        this.props.setPGN(this.state.engine.pgn());
       } else {
         console.log('Illegal move my guy');
         this.props.clearCoords();
@@ -167,5 +169,6 @@ export default connect(mapStateToProps,
     setBoard,
     fetchGames,
     getArchive,
+    setPGN,
   },
 )(Chessboard);
