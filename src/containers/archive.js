@@ -1,21 +1,6 @@
-/*
-The chessboard is a top-level container with 3 main purposes
-
-1. To communicate with the redux state to render the chess board and
-pass a callback function to the individual tiles so that user moves
-can be recorded and displayed
-
-2. Store the ChessJS engine for validating and updating chess moves
-on the board
-
-3. Make API calls to Chess.com for fetching and storing archived games of
-whatever player/user you want
-*/
-
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-
 
 import {
   setOrigin,
@@ -36,13 +21,34 @@ class Archives extends Component {
     this.state = {
       games: '',
     };
+
+    this.renderArchive = this.renderArchive.bind(this);
   }
 
+  renderArchive() {
+    if (this.props.archive.games) {
+      const archivedGames = this.props.archive.games.map(game =>
+        <div className="archivedGameContainer">
+          {game.opening}
+          {game.players}
+        </div>,
+      );
+      return (
+        { archivedGames }
+      );
+    } else {
+      return (
+        <div className="archivedGameContainer" >
+          test
+        </div>
+      );
+    }
+  }
 
   render() {
     return (
       <div className="archives" >
-        hi
+        {this.renderArchive()}
       </div>
     );
   }
@@ -50,6 +56,7 @@ class Archives extends Component {
 
 const mapStateToProps = state => ({ // eslint-disable-line no-unused-vars
   currentBoard: state.currentBoard,
+  archive: state.archive,
 });
 
 export default connect(mapStateToProps,

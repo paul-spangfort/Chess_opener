@@ -86,7 +86,9 @@ body {
 .archives{
   height: 600px;
   width: 250px;
-  background-color: red;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .chessBoard{
@@ -113,10 +115,32 @@ body {
   line-height: 30px;
 }
 
+.currentPGN{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.pgnMove{
+  position: relative;
+  width: 31%;
+  font-size: 16px;
+  height: 30px;
+  padding-right: 5px;
+}
+
 .chessTile {
   position: relative;
   height: 12.5%;
   width: 12.5%;
   padding: 0;
   margin: 0;
+}
+
+.archivedGameContainer{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border: 1px solid black;
+
 }

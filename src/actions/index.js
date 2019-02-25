@@ -29,9 +29,12 @@ function processGame(game) {
     black: game.black,
   };
 
-  const pgn = game.pgn.split(/\r?\n/).slice(-1)[0].replace(/\{([^}]+)\}/g, '');
+  const info = game.pgn.split(/\r?\n/);
 
-  return { players, pgn };
+  const pgn = info.slice(-1)[0].replace(/\{([^}]+)\}/g, '');
+  const opening = info[8].split('/').slice(-1)[0].slice(4, -2);
+
+  return { opening, players, pgn };
 }
 
 export function fetchGames(username) {
@@ -51,12 +54,13 @@ export function fetchGames(username) {
 
         // console.log(date);
         axios.get(gamesUrl(username, date[1], date[0])).then((res) => {
-          console.log('Fetched games, they are: ');
-          console.log(res);
+          // console.log('Fetched games, they are: ');
+          // console.log(res);
 
-          const pgn = res.data.games[0].pgn.split(/\r?\n/).slice(-1)[0].replace(/\{([^}]+)\}/g, '');
+          // const opening = res.data.games[0].pgn.split(/\r?\n/)[8];
 
-          console.log(pgn);
+          console.log('Single game');
+          // console.log(pgn);
 
           const games = [];
 
@@ -64,10 +68,6 @@ export function fetchGames(username) {
             const game = processGame(g);
             games.push(game);
           });
-
-          console.log(games);
-
-          console.log('This is game');
 
           dispatch({
             type: ActionTypes.SET_GAMES,

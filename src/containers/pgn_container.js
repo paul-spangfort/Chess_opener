@@ -42,9 +42,15 @@ class PGN extends Component {
 
   renderPGN() {
     if (this.props.currentBoard.pgn) {
+      const listItems = this.props.currentBoard.pgn.split(' ').map(move =>
+        <div className="pgnMove">
+          <b>{move} </b>
+        </div>,
+      );
+
       return (
         <div className="currentPGN">
-          {this.props.currentBoard.pgn}
+          {listItems}
         </div>
       );
     } else {
@@ -56,12 +62,11 @@ class PGN extends Component {
     }
   }
 
-
   render() {
     return (
       <div className="pgn_container" >
         <div className="pgn_header">
-        PGN:
+        Current PGN:
         </div>
 
         {this.renderPGN()}
