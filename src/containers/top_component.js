@@ -8,7 +8,7 @@ import {
 } from '../actions';
 
 // const OFFLINE = true;
-const OFFLINE = false;
+// const OFFLINE = false;
 
 
 class TopComponent extends Component {

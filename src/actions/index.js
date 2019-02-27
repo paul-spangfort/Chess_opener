@@ -101,7 +101,6 @@ export function generateRandomGames(username = 'kingraoul') {
       };
     }
 
-
     // Set random pgn
     engine.reset();
     console.log('random moves');

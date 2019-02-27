@@ -30,29 +30,27 @@ class Archives extends Component {
   players(game) {
     console.log('This is i the game');
     console.log(game);
-    console.log(this.state.name);
-    console.log(game.players.white.name);
-    console.log(game.players);
-    if (game.players.white.name === this.state.name) {
+    console.log(game.players.black.username);
+    console.log(game.players.white.username);
+    if (game.players.white.username === this.state.name) {
       console.log('youre white');
-      console.log(game);
       return (
         <div>
           <div>
-            {game.players.white.name}
+            {game.players.white.username}
           </div>
           <div>
-            {game.players.black.name}
+            {game.players.black.username}
           </div>
         </div>);
     } else {
       return (
         <div>
           <div>
-            {game.players.black.name}
+            {game.players.black.username}
           </div>
           <div>
-            {game.players.white.name}
+            {game.players.white.username}
           </div>
         </div>);
     }
