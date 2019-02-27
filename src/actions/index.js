@@ -1,4 +1,6 @@
 import axios from 'axios';
+import random from 'math-random';
+import Chess from 'chess.js';
 // keys for actiontypes
 export const ActionTypes = {
   SET_BOARD: 'SET_BOARD',
@@ -14,6 +16,10 @@ export const ActionTypes = {
   FINISHED_LOADING: 'FINISHED_LOADING',
   START_LOADING: 'START_LOADING',
 };
+
+const NUM_GAMES = 5;
+const OFFLINE = false;
+// const OFFLINE = true;
 
 function archivesUrl(username) {
   return `https://api.chess.com/pub/player/${username}/games/archives`;
@@ -37,7 +43,115 @@ function processGame(game) {
   return { opening, players, pgn };
 }
 
+const opponents = [
+  'Opp 1',
+  'Opp 2',
+  'Opp 3',
+  'Opp 4',
+  'Opp 5',
+  'Opp 6',
+  'Opp 7',
+  'Opp 8',
+  'Opp 9',
+  'Opp 10',
+  'Opp 11'];
+
+const openings = [];
+
+for (let j = 0; j < 10; j += 1) {
+  let letter = 'A';
+  let constant = 0;
+
+  if (j % 5 === 0) {
+    letter = 'B';
+    constant = 5;
+  }
+
+  openings.push(letter + (j - constant));
+}
+
+console.log('Top');
+console.log(openings);
+
+opponents.pop();
+
+export function generateRandomGames(username = 'kingraoul') {
+  // const games = [];
+
+  const engine = new Chess();
+
+  const games = [];
+  for (let i = 0; i < NUM_GAMES; i += 1) {
+    const randVal = random();
+    const randIndex = Math.floor(random() * 10);
+    const randOpp = opponents[randIndex];
+    const randPGN = Math.floor(random() * 26);
+    let players = {};
+
+    // Set random players
+    if (randVal >= 0.5) {
+      players = {
+        white: username,
+        black: randOpp,
+      };
+    } else {
+      players = {
+        black: username,
+        white: randOpp,
+      };
+    }
+
+
+    // Set random pgn
+    engine.reset();
+    console.log('random moves');
+    for (let k = 0; k < randVal * randPGN; k += 1) {
+      const n = Math.floor(randVal * engine.moves().length);
+
+      engine.move(engine.moves()[n]);
+    }
+
+    const pgn = engine.pgn();
+
+    // Pick randomly generated opening
+    const opening = openings[Math.floor(random() * openings.length)];
+
+    /*
+    console.log('this israndom pgn');
+    console.log(pgn);
+    */
+
+    const result = {
+      players,
+      pgn,
+      opening,
+    };
+
+    games.push(result);
+  }
+
+  return games;
+}
+
+
+export function RandomGame(username = 'kingraoul') {
+  let randVal = random(10);
+  randVal += 0;
+  return randVal;
+}
+
 export function fetchGames(username) {
+  if (OFFLINE) {
+    return async (dispatch) => {
+      const games = generateRandomGames();
+      console.log('randoms');
+      console.log(games);
+      dispatch({
+        type: ActionTypes.SET_GAMES,
+        payload: games,
+      });
+    };
+  }
   console.log('ABout to fetch at ');
   console.log(archivesUrl(username));
   return async (dispatch) => {

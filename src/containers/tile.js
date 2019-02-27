@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getSource, coordToInt } from '../helper_functions';
 
+// const OFFLINE = true;
+const OFFLINE = false;
+
 class Tile extends Component {
 
   constructor(props) {
@@ -53,16 +56,24 @@ class Tile extends Component {
 
     const tile = this.props.currentBoard.board[index];
 
-    if (tile.piece) {
+    // const style = { color: 'black' };
+
+    if ((tile.piece) && (OFFLINE === false)) {
       const imgsrc = getSource(tile.piece);
       return (
-        <div>
+        <div className="tileContainer">
           <img src={imgsrc} alt="" />
+        </div>
+      );
+    } else if (tile.piece) {
+      return (
+        <div className="tileContainer">
+          {tile.piece.color + tile.piece.type}
         </div>
       );
     } else {
       return (
-        <div />
+        <div className="tileContainer" />
       );
     }
   }

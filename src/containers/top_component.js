@@ -7,6 +7,9 @@ import {
   fetchGames,
 } from '../actions';
 
+// const OFFLINE = true;
+const OFFLINE = false;
+
 
 class TopComponent extends Component {
 
@@ -22,6 +25,11 @@ class TopComponent extends Component {
 
   onChange(event) {
     this.setState({ username: event.target.value });
+  }
+
+
+  onClick() {
+    this.props.fetchGames(this.state.username);
   }
 
   renderButtonText() {

@@ -20,9 +20,42 @@ class Archives extends Component {
 
     this.state = {
       games: '',
+      name: 'kingraoul',
     };
 
     this.renderArchive = this.renderArchive.bind(this);
+    this.players = this.players.bind(this);
+  }
+
+  players(game) {
+    console.log('This is i the game');
+    console.log(game);
+    console.log(this.state.name);
+    console.log(game.players.white.name);
+    console.log(game.players);
+    if (game.players.white.name === this.state.name) {
+      console.log('youre white');
+      console.log(game);
+      return (
+        <div>
+          <div>
+            {game.players.white.name}
+          </div>
+          <div>
+            {game.players.black.name}
+          </div>
+        </div>);
+    } else {
+      return (
+        <div>
+          <div>
+            {game.players.black.name}
+          </div>
+          <div>
+            {game.players.white.name}
+          </div>
+        </div>);
+    }
   }
 
   renderArchive() {
@@ -30,11 +63,13 @@ class Archives extends Component {
       const archivedGames = this.props.archive.games.map(game =>
         <div className="archivedGameContainer">
           {game.opening}
-          {game.players}
+          {this.players(game)}
         </div>,
       );
       return (
-        { archivedGames }
+        <div>
+          { archivedGames }
+        </div>
       );
     } else {
       return (

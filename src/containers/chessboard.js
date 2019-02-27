@@ -14,6 +14,7 @@ whatever player/user you want
 
 import React, { Component } from 'react';
 import Chess from 'chess.js';
+import random from 'math-random';
 
 import { connect } from 'react-redux';
 
@@ -126,6 +127,7 @@ class Chessboard extends Component {
     const listItems = updatedTiles.map(tile => <Tile
       color={tile.color} piece={tile.piece}
       coordinate={tile.coordinate} onclick={this.onClick}
+      key={random()}
     />);
 
     return listItems;
@@ -144,6 +146,7 @@ class Chessboard extends Component {
     const listItems = updatedTiles.map(tile => <Tile
       color={tile.color} piece={tile.piece}
       coordinate={tile.coordinate} onclick={this.onClick}
+      key={random()}
     />);
 
     // console.log('These are tiles');
